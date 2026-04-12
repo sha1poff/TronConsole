@@ -1,6 +1,6 @@
 #pragma once
 #include "TronPlayer.h"
-
+#include "TronField.h"
 
 class TronComputerPlayer : public TronPlayer
 {
@@ -15,5 +15,5 @@ public:
     virtual ~TronComputerPlayer();
 
     // Искусственный интеллект
-    virtual void UpdateDirection() override;
+    void UpdateDirection(const TronField* field) override;
 };

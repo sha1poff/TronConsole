@@ -9,35 +9,62 @@
 #include "TronManager.h"
 
 
+void ShowMenu() {
+    system("cls");
+    std::cout << "==============================" << std::endl;
+    std::cout << "          TRON В КОНСОЛИ      " << std::endl;
+    std::cout << "==============================" << std::endl;
+    std::cout << "1. Человек против Человека (PvP)" << std::endl;
+    std::cout << "2. Человек против Бота (PvE)" << std::endl;
+    std::cout << "3. Выход" << std::endl;
+    std::cout << "\nВыберите режим: ";
+}
+
 int main() {
     setlocale(LC_ALL, "Russian");
+    srand((unsigned int)time(NULL));
 
-    std::string name1, name2;
+    bool exitProgram = false;
 
-    // 1. Запрашиваем имена у пользователей
-    std::cout << "=== ДОБРО ПОЖАЛОВАТЬ В TRON ===\n" << std::endl;
+    while (!exitProgram) {
+        ShowMenu();
+        int choice;
+        std::cin >> choice;
 
-    std::cout << "Введите имя первого игрока (WASD): ";
-    std::cin >> name1;
+        if (choice == 3) {
+            exitProgram = true;
+            continue;
+        }
 
-    std::cout << "Введите имя второго игрока (Стрелки): ";
-    std::cin >> name2;
+        std::string n1, n2 = "Бот";
+        std::cout << "Введите имя первого игрока: ";
+        std::cin >> n1;
 
-    system("cls");
+        if (choice == 1) {
+            std::cout << "Введите имя второго игрока: ";
+            std::cin >> n2;
+        }
 
-    TronManager manager(70, 25);
+        // Создаем игру
+        TronManager manager(70, 25);
+        manager.SetPlayer(1, new TronHumanPlayer(n1, 10, 12, Direction::RIGHT, 10, false));
 
-    TronPlayer* player1 = new TronHumanPlayer(name1, 10, 12, Direction::RIGHT, 10, false);
-    TronPlayer* player2 = new TronHumanPlayer(name2, 60, 12, Direction::LEFT, 12, true);
+        if (choice == 1) {
+            manager.SetPlayer(2, new TronHumanPlayer(n2, 60, 12, Direction::LEFT, 12, true));
+        }
+        else {
+            manager.SetPlayer(2, new TronComputerPlayer(n2, 60, 12, Direction::LEFT, 12));
+        }
 
-    // игрок 1: зеленый цвет (10)
-    manager.SetPlayer(1, player1);
+        // Запуск раунда
+        system("cls");
+        manager.Run();
 
-    // игрок 2: красный цвет (12)
-    manager.SetPlayer(2, player2);
-
-    // 4. Запуск
-    manager.Run();
+        std::cout << "\nХотите сыграть еще раз? (1 - Да, 0 - Нет): ";
+        int again;
+        std::cin >> again;
+        if (again == 0) exitProgram = true;
+    }
 
     return 0;
 }

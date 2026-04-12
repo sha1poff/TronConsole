@@ -17,7 +17,8 @@ TronHumanPlayer::~TronHumanPlayer()
 {
 }
 
-void TronHumanPlayer::UpdateDirection() {
+void TronHumanPlayer::UpdateDirection(const TronField* field)
+{
     int pressedKey = 0;
 
     if (m_UseArrows)

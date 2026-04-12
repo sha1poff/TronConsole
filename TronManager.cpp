@@ -37,8 +37,8 @@ void TronManager::Run() {
 }
 
 void TronManager::ProcessInput() {
-    m_Player1->UpdateDirection();
-    m_Player2->UpdateDirection();
+    m_Player1->UpdateDirection(m_Field);
+    m_Player2->UpdateDirection(m_Field);
 }
 
 void TronManager::Update() {

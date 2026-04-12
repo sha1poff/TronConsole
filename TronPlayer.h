@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "TronField.h"
 
 
 enum class Direction {UP, RIGHT, DOWN, LEFT };
@@ -17,7 +18,7 @@ public:
     TronPlayer(std::string name, int x, int y, Direction dir, int color);
     virtual ~TronPlayer();  
 
-    virtual void UpdateDirection() = 0;
+    virtual void UpdateDirection(const TronField* field) = 0;
 
     void Move();
 
