@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="TronConsole.vcxproj" Id="be9f3d9c-a015-4061-9f18-8e61b865d12b" />
+</Solution>
