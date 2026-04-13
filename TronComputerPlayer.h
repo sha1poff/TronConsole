@@ -4,16 +4,19 @@
 
 class TronComputerPlayer : public TronPlayer
 {
+private:
+	int m_Difficulty; // 1 - легкий, 2 - средний, 3 - сложный
+
 public:
     TronComputerPlayer(
         std::string name,
-        int x, int y,
-        Direction dir,
-        int color
+        int playerNum
     );
 
     virtual ~TronComputerPlayer();
 
-    // Искусственный интеллект
+    void SetDifficulty(int diff);
+
+    // искусственный интеллект
     void UpdateDirection(const TronField* field) override;
 };

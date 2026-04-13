@@ -1,70 +1,66 @@
 ﻿#include "pch.h"
 
-#include "TronField.h"
-
-#include "TronPlayer.h"
+#include "TronUI.h"
+#include "TronManager.h"
 #include "TronHumanPlayer.h"
 #include "TronComputerPlayer.h"
 
-#include "TronManager.h"
-
-
-void ShowMenu() {
-    system("cls");
-    std::cout << "==============================" << std::endl;
-    std::cout << "          TRON В КОНСОЛИ      " << std::endl;
-    std::cout << "==============================" << std::endl;
-    std::cout << "1. Человек против Человека (PvP)" << std::endl;
-    std::cout << "2. Человек против Бота (PvE)" << std::endl;
-    std::cout << "3. Выход" << std::endl;
-    std::cout << "\nВыберите режим: ";
-}
 
 int main() {
-    setlocale(LC_ALL, "Russian");
-    srand((unsigned int)time(NULL));
+    // 1. Инициализация систем
+    TronUI::SetupConsole();
+    srand(static_cast<unsigned int>(time(0)));
 
-    bool exitProgram = false;
+    // 2. Начальный экран и получение имени игрока
+    std::string pName = TronUI::ShowStartScreen();
 
-    while (!exitProgram) {
-        ShowMenu();
-        int choice;
-        std::cin >> choice;
+    // Состояние серии (Best of 5)
+    int pWins = 0, bWins = 0;
+    int currentDiff = 1;
+    int round = 1;
 
-        if (choice == 3) {
-            exitProgram = true;
-            continue;
+    // 3. Главный цикл серии матчей
+    while (pWins < 3 && bWins < 3) {
+        // Показываем заставку перед раундом (счет и уровень сложности)
+        TronUI::ShowMatchStatus(pName, pWins, bWins, round, currentDiff);
+
+        // Создаем менеджер игры для конкретного раунда
+        TronManager game(70, 25);
+
+        // Создаем игроков. Номер (1 или 2) автоматически задает:
+        // - Стартовую позицию и направление
+        // - Цвет (Зеленый или Фиолетовый)
+        // - Управление (WASD или Стрелки)
+        TronHumanPlayer* human = new TronHumanPlayer(pName, 1);
+        TronComputerPlayer* bot = new TronComputerPlayer("Бот", 2);
+
+        // Устанавливаем текущую сложность для ИИ
+        bot->SetDifficulty(currentDiff);
+
+        game.SetPlayer(1, human);
+        game.SetPlayer(2, bot);
+
+        // 4. Запуск игрового процесса раунда
+        int result = game.Run();
+
+        // 5. Обработка результатов раунда
+        if (result == 1) {
+            pWins++;
+            // Если игрок победил, повышаем сложность для следующего раунда
+            if (currentDiff < 3) currentDiff++;
+        }
+        else if (result == 2) {
+            bWins++;
         }
 
-        std::string n1, n2 = "Бот";
-        std::cout << "Введите имя первого игрока: ";
-        std::cin >> n1;
+        // Показываем промежуточный результат и ждем нажатия клавиши
+        TronUI::ShowRoundResult(result, pName, pWins, bWins);
 
-        if (choice == 1) {
-            std::cout << "Введите имя второго игрока: ";
-            std::cin >> n2;
-        }
-
-        // Создаем игру
-        TronManager manager(70, 25);
-        manager.SetPlayer(1, new TronHumanPlayer(n1, 10, 12, Direction::RIGHT, 10, false));
-
-        if (choice == 1) {
-            manager.SetPlayer(2, new TronHumanPlayer(n2, 60, 12, Direction::LEFT, 12, true));
-        }
-        else {
-            manager.SetPlayer(2, new TronComputerPlayer(n2, 60, 12, Direction::LEFT, 12));
-        }
-
-        // Запуск раунда
-        system("cls");
-        manager.Run();
-
-        std::cout << "\nХотите сыграть еще раз? (1 - Да, 0 - Нет): ";
-        int again;
-        std::cin >> again;
-        if (again == 0) exitProgram = true;
+        round++;
     }
+
+    // 6. Финальный экран с итогами всей серии
+    TronUI::ShowFinalResults(pName, pWins, bWins);
 
     return 0;
 }

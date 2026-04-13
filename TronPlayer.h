@@ -9,13 +9,14 @@ class TronPlayer
 {
 protected: // protected, чтобы наследники видели поля
     std::string m_Name;
+    int m_PlayerNumber;
     int m_X, m_Y;
     Direction m_Dir;
     int m_Color;
     bool m_IsAlive;
 
 public:
-    TronPlayer(std::string name, int x, int y, Direction dir, int color);
+    TronPlayer(std::string name, int playerNum);
     virtual ~TronPlayer();  
 
     virtual void UpdateDirection(const TronField* field) = 0;

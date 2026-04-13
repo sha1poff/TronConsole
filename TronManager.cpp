@@ -15,53 +15,59 @@ TronManager::~TronManager()
     if (m_Player2) delete m_Player2;
 }
 
-void TronManager::SetPlayer(int slot, TronPlayer* player) {
+void TronManager::SetPlayer(int slot, TronPlayer* player)
+{
     if (slot == 1) m_Player1 = player;
     else if (slot == 2) m_Player2 = player;
 }
 
-void TronManager::Run() {
-    // Проверка: можем ли мы начать без игроков?
-    if (!m_Player1 || !m_Player2) {
-        std::cout << "Ошибка: не все игроки созданы!" << std::endl;
-        return;
-    }
-
+int TronManager::Run()
+{
     m_IsRunning = true;
-    while (m_IsRunning) {
+    int winner = 0;
+
+    while (m_IsRunning)
+    {
+        // 1. Сначала управление. 
+        // Если GetCell в поле защищен (см. выше), бот не уронит программу.
         ProcessInput();
-        Update();
-        Render();
-        Sleep(80);
-    }
-}
 
-void TronManager::ProcessInput() {
-    m_Player1->UpdateDirection(m_Field);
-    m_Player2->UpdateDirection(m_Field);
-}
+        // 2. Движение
+        m_Player1->Move();
+        m_Player2->Move();
 
-void TronManager::Update() {
-    // Массив для удобного обхода двух игроков в цикле внутри метода
-    TronPlayer* players[] = { m_Player1, m_Player2 };
+        int x1 = m_Player1->GetX();
+        int y1 = m_Player1->GetY();
+        int x2 = m_Player2->GetX();
+        int y2 = m_Player2->GetY();
 
-    for (TronPlayer* p : players) {
-        // 1. Оставляем след
-        m_Field->SetCell(p->GetX(), p->GetY(), p->GetColor());
+        // 3. Проверка стен (Чистая математика, без обращения к массиву)
+        bool p1Wall = (x1 < 0 || x1 >= m_Field->GetWidth() || y1 < 0 || y1 >= m_Field->GetHeight());
+        bool p2Wall = (x2 < 0 || x2 >= m_Field->GetWidth() || y2 < 0 || y2 >= m_Field->GetHeight());
 
-        // 2. Двигаемся
-        p->Move();
-
-        // 3. Проверка столкновения
-        int cell = m_Field->GetCell(p->GetX(), p->GetY());
-        if (cell != 0) {
+        if (p1Wall || p2Wall)
+        {
             m_IsRunning = false;
-            m_Field->Draw(); // Последний кадр
-            std::cout << "\nБАБАХ! Игрок " << p->GetName() << " проиграл!" << std::endl;
-            system("pause");
+            if (p1Wall && p2Wall) winner = 0;
+            else if (p1Wall)      winner = 2;
+            else                  winner = 1;
             break;
         }
+
+        // 4. Отрисовка следа (Только если мы внутри поля!)
+        m_Field->SetCell(x1, y1, m_Player1->GetColor());
+        m_Field->SetCell(x2, y2, m_Player2->GetColor());
+
+        Render();
+        Sleep(70);
     }
+    return winner;
+}
+
+void TronManager::ProcessInput()
+{
+    m_Player1->UpdateDirection(m_Field);
+    m_Player2->UpdateDirection(m_Field);
 }
 
 void TronManager::Render() {

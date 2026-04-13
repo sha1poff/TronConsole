@@ -2,14 +2,23 @@
 #include "TronPlayer.h"
 
 
-TronPlayer::TronPlayer(std::string name, int x, int y, Direction dir, int color) :
-    m_Name(name),
-    m_X(x),
-    m_Y(y),
-    m_Dir(dir),
-    m_Color(color),
-    m_IsAlive(true)
+TronPlayer::TronPlayer(std::string name, int playerNum)
+    : m_Name(name), m_PlayerNumber(playerNum) // инициализация
 {
+    if (m_PlayerNumber == 1)
+    {
+        m_X = 10;
+        m_Y = 12;
+        m_Dir = Direction::RIGHT;
+        m_Color = 10; // зеленый
+    }
+    if (m_PlayerNumber == 2)
+    {
+        m_X = 60;
+        m_Y = 12;
+        m_Dir = Direction::LEFT;
+        m_Color = 13; // фиолетовый
+    }
 }
 
 TronPlayer::~TronPlayer()

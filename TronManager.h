@@ -21,5 +21,5 @@ public:
 
     // теперь метод принимает конкретный номер игрока
     void SetPlayer(int slot, TronPlayer* player);
-    void Run();
+    int Run();
 };

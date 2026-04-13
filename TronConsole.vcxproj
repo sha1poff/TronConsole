@@ -133,6 +133,7 @@
     <ClCompile Include="TronHumanPlayer.cpp" />
     <ClCompile Include="TronManager.cpp" />
     <ClCompile Include="TronPlayer.cpp" />
+    <ClCompile Include="TronUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="TronHumanPlayer.h" />
     <ClInclude Include="TronManager.h" />
     <ClInclude Include="TronPlayer.h" />
+    <ClInclude Include="TronUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
