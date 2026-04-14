@@ -73,7 +73,8 @@ void TronComputerPlayer::UpdateDirection(const TronField* field)
                     }
                 }
             }
-            else break; // Стена — прекращаем сканирование в этом направлении
+            else
+                break; // Стена — прекращаем сканирование в этом направлении
         }
 
         if (score > maxScore)

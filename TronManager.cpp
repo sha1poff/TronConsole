@@ -11,18 +11,23 @@ TronManager::TronManager(int width, int height)
 TronManager::~TronManager() 
 {
     delete m_Field;
-    if (m_Player1) delete m_Player1;
-    if (m_Player2) delete m_Player2;
+    if (m_Player1)
+        delete m_Player1;
+    if (m_Player2)
+        delete m_Player2;
 }
 
 void TronManager::SetPlayer(int slot, TronPlayer* player)
 {
-    if (slot == 1) m_Player1 = player;
-    else if (slot == 2) m_Player2 = player;
+    if (slot == 1)
+        m_Player1 = player;
+    else if (slot == 2)
+        m_Player2 = player;
 }
 
 int TronManager::Run()
 {
+    
     m_IsRunning = true;
     int winner = 0;
 
@@ -48,9 +53,12 @@ int TronManager::Run()
         if (p1Wall || p2Wall)
         {
             m_IsRunning = false;
-            if (p1Wall && p2Wall) winner = 0;
-            else if (p1Wall)      winner = 2;
-            else                  winner = 1;
+            if (p1Wall && p2Wall)
+                winner = 0;
+            else if (p1Wall)
+                winner = 2;
+            else 
+                winner = 1;
             break;
         }
 
@@ -62,12 +70,17 @@ int TronManager::Run()
         Sleep(70);
     }
     return winner;
+    
 }
 
 void TronManager::ProcessInput()
 {
     m_Player1->UpdateDirection(m_Field);
     m_Player2->UpdateDirection(m_Field);
+}
+
+void TronManager::Update()
+{
 }
 
 void TronManager::Render() {
