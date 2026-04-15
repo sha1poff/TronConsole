@@ -33,13 +33,12 @@ void TronComputerPlayer::UpdateDirection(const TronField* field)
 
         int score = 0;
 
-        // В зависимости от сложности меняем глубину анализа
+        // В зависимости от сложности меняем глубину анализа    
         int depth = (m_Difficulty == 1) ? 1 : (m_Difficulty == 2 ? 10 : 15);
 
         for (int i = 1; i <= depth; i++) {
             int tx = m_X, ty = m_Y;
 
-            // Используем switch для модификации координат в зависимости от d
             switch (d)
             {
                 case Direction::UP:    ty -= i; break;

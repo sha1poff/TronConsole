@@ -6,11 +6,11 @@ class TronField
 private:
     int m_Width;
     int m_Height;
-    int** m_Grid; // указатель на массив указателей
+    int** m_Grid;
 
 public:
     TronField(int width, int height);
-    ~TronField(); // здесь будем чистить память
+    ~TronField();
 
     void Init();
     void Draw() const;

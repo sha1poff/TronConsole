@@ -7,17 +7,17 @@ TronPlayer::TronPlayer(std::string name, int playerNum)
 {
     if (m_PlayerNumber == 1)
     {
-        m_X = 10;
-        m_Y = 12;
-        m_Dir = Direction::RIGHT;
-        m_Color = 10; // зеленый
+        this->m_X = 10;
+        this->m_Y = 12;
+        this->m_Dir = Direction::RIGHT;
+        this->m_Color = 10; // зеленый
     }
     if (m_PlayerNumber == 2)
     {
-        m_X = 60;
-        m_Y = 12;
-        m_Dir = Direction::LEFT;
-        m_Color = 13; // фиолетовый
+        this->m_X = 60;
+        this->m_Y = 12;
+        this->m_Dir = Direction::LEFT;
+        this->m_Color = 13; // фиолетовый
     }
 }
 
@@ -27,7 +27,6 @@ TronPlayer::~TronPlayer()
 
 void TronPlayer::Move()
 {
-    // Теперь используем переменные с префиксом m_
     switch (m_Dir)
     {
     case Direction::UP:

@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "TronUI.h"
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
 
 
 void TronUI::SetupConsole() {

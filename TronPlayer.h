@@ -1,9 +1,9 @@
 #pragma once
+
+#include "Direction.h"
 #include "pch.h"
 #include "TronField.h"
 
-
-enum class Direction {UP, RIGHT, DOWN, LEFT };
 
 class TronPlayer
 {
