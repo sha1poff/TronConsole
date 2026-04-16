@@ -27,9 +27,9 @@ void TronField::Init()
     for (int y = 0; y < m_Height; y++) {
         for (int x = 0; x < m_Width; x++) {
             if (y == 0 || y == m_Height - 1 || x == 0 || x == m_Width - 1)
-                m_Grid[y][x] = 1; // Стена
+                m_Grid[y][x] = 1; // стена
             else
-                m_Grid[y][x] = 0; // Пусто
+                m_Grid[y][x] = 0; // пустота
         }
     }
 }

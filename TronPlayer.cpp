@@ -63,13 +63,3 @@ int TronPlayer::GetY() const
 {
     return m_Y;
 }
-
-bool TronPlayer::IsAlive() const
-{
-    return m_IsAlive;
-}
-
-void TronPlayer::Die()
-{
-    m_IsAlive = false;
-}

@@ -3,7 +3,9 @@
 
 
 TronManager::TronManager(int width, int height) 
-    : m_IsRunning(false), m_Player1(nullptr), m_Player2(nullptr) 
+    : m_IsRunning(false),
+      m_Player1(nullptr),
+      m_Player2(nullptr) 
 {
     m_Field = new TronField(width, height);
 }

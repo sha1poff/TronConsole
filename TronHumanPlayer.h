@@ -3,7 +3,9 @@
 #include "TronPlayer.h"
 #include "TronField.h"
 
-
+/// <summary>
+/// Класс для управления игроком-человеком. Реализует логику обработки ввода с клавиатуры для изменения направления движения.
+/// </summary>
 class TronHumanPlayer :
     public TronPlayer
 {

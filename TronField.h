@@ -1,6 +1,8 @@
 #pragma once
 
-
+/// <summary>
+/// Представляет игровое поле для игры Tron. Управляет сеткой, инициализацией и отрисовкой поля.
+/// </summary>
 class TronField
 {
 private:

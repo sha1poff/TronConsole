@@ -5,7 +5,6 @@ TronHumanPlayer::TronHumanPlayer(std::string name, int playerNum)
     : TronPlayer(name, playerNum) // вызов базового конструктора для позиции и цвета
 {
     if (m_PlayerNumber == 1) {
-        // ОБЯЗАТЕЛЬНО ЗАГЛАВНЫЕ БУКВЫ для GetAsyncKeyState
         m_UpKey = 'W';
         m_DownKey = 'S';
         m_LeftKey = 'A';
