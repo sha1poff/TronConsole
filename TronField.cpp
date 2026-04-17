@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "CellType.h"
 #include "TronField.h"
 
 
@@ -22,14 +23,13 @@ TronField::~TronField()
     m_Grid = nullptr;
 }
 
-void TronField::Init()
-{
+void TronField::Init() {
     for (int y = 0; y < m_Height; y++) {
         for (int x = 0; x < m_Width; x++) {
             if (y == 0 || y == m_Height - 1 || x == 0 || x == m_Width - 1)
-                m_Grid[y][x] = 1; // стена
+                m_Grid[y][x] = WALL;
             else
-                m_Grid[y][x] = 0; // пустота
+                m_Grid[y][x] = EMPTY;
         }
     }
 }
@@ -41,7 +41,6 @@ void TronField::Draw() const
     COORD characterPos = { 0, 0 };
     SMALL_RECT writeRegion = { 0, 0, (SHORT)(m_Width - 1), (SHORT)(m_Height - 1) };
 
-    // Создаем массив структур (символ + атрибуты цвета)
     CHAR_INFO* chipBuffer = new CHAR_INFO[m_Width * m_Height];
 
     for (int y = 0; y < m_Height; y++) {
@@ -49,17 +48,39 @@ void TronField::Draw() const
             int index = y * m_Width + x;
             int val = m_Grid[y][x];
 
-            // Устанавливаем символ
-            chipBuffer[index].Char.AsciiChar = (val == 0 ? ' ' : (val == 1 ? '#' : '@'));
+            // Рисуем всё тем же символом блока, но через unsigned char
+            unsigned char block = 219;
 
-            // Устанавливаем цвет
-            if (val == 1) chipBuffer[index].Attributes = 8;
-            else if (val == 0) chipBuffer[index].Attributes = 7;
-            else chipBuffer[index].Attributes = (WORD)val;
+            switch (val) {
+            case WALL:
+                chipBuffer[index].Char.AsciiChar = '#';
+                chipBuffer[index].Attributes = 8; // Темно-серый
+                break;
+            case P1_HEAD:
+                chipBuffer[index].Char.AsciiChar = block;
+                chipBuffer[index].Attributes = 10; // Ярко-зеленый
+                break;
+            case P1_TRAIL:
+                chipBuffer[index].Char.AsciiChar = block;
+                chipBuffer[index].Attributes = 2;  // Тускло-зеленый
+                break;
+            case P2_HEAD:
+                chipBuffer[index].Char.AsciiChar = block;
+                chipBuffer[index].Attributes = 13; // Ярко-розовый
+                break;
+            case P2_TRAIL:
+                chipBuffer[index].Char.AsciiChar = block;
+                chipBuffer[index].Attributes = 5;  // Тускло-пурпурный
+                break;
+            default: // EMPTY
+                chipBuffer[index].Char.AsciiChar = ' ';
+                chipBuffer[index].Attributes = 7;
+                break;
+            }
         }
     }
 
-    // ОДИН вызов функции на весь экран!
+    // Используем WriteConsoleOutputA (ASCII версию)
     WriteConsoleOutputA(hConsole, chipBuffer, bufferSize, characterPos, &writeRegion);
 
     delete[] chipBuffer;

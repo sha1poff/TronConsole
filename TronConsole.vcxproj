@@ -136,6 +136,7 @@
     <ClCompile Include="TronUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CellType.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TronComputerPlayer.h" />
