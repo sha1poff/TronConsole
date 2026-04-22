@@ -9,14 +9,14 @@ TronPlayer::TronPlayer(std::string name, int playerNum)
     {
         this->m_X = 10;
         this->m_Y = 12;
-        this->m_Dir = Direction::RIGHT;
+        this->m_Dir = RIGHT;
         this->m_Color = 10; // зеленый
     }
     if (m_PlayerNumber == 2)
     {
         this->m_X = 60;
         this->m_Y = 12;
-        this->m_Dir = Direction::LEFT;
+        this->m_Dir = LEFT;
         this->m_Color = 13; // фиолетовый
     }
 }
@@ -29,16 +29,16 @@ void TronPlayer::Move()
 {
     switch (m_Dir)
     {
-    case Direction::UP:
+    case UP:
         m_Y--;
         break;
-    case Direction::LEFT:
+    case LEFT:
         m_X--;
         break;
-    case Direction::RIGHT:
+    case RIGHT:
         m_X++;
         break;
-    case Direction::DOWN:
+    case DOWN:
         m_Y++;
         break;
     }

@@ -21,7 +21,8 @@ void TronUI::Clear()
 
 void TronUI::WaitKey()
 {
-    while (_kbhit()) _getch();
+    while (_kbhit())
+        _getch();
     _getch();
 }
 
@@ -77,7 +78,8 @@ void TronUI::StartGameLoop() {
         TronPlayer* p1 = new TronHumanPlayer(p1Name, 1);
         TronPlayer* p2 = nullptr;
 
-        if (isPvE) {
+        if (isPvE)
+        {
             TronComputerPlayer* bot = new TronComputerPlayer(p2Name, 2);
             bot->SetDifficulty(currentDiff);
             p2 = bot;

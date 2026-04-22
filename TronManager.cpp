@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "CellType.h"
 #include "TronManager.h"
 
@@ -33,20 +34,22 @@ int TronManager::Run() {
     int winner = 0;
 
     while (m_IsRunning) {
-        ProcessInput();
+        // вычичсляем следующий ход
+        m_Player1->UpdateDirection(m_Field);
+        m_Player2->UpdateDirection(m_Field);
 
-        // Запоминаем текущие позиции (где сейчас головы)
+        // запоминаем текущие позиции (где сейчас головы)
         int oldX1 = m_Player1->GetX(), oldY1 = m_Player1->GetY();
         int oldX2 = m_Player2->GetX(), oldY2 = m_Player2->GetY();
 
-        // Совершаем движение
+        // совершаем движение
         m_Player1->Move();
         m_Player2->Move();
 
         int x1 = m_Player1->GetX(), y1 = m_Player1->GetY();
         int x2 = m_Player2->GetX(), y2 = m_Player2->GetY();
 
-        // Проверка столкновений
+        // проверка столкновений
         bool p1Hit = (x1 < 0 || x1 >= m_Field->GetWidth() || y1 < 0 || y1 >= m_Field->GetHeight() || m_Field->GetCell(x1, y1) != EMPTY);
         bool p2Hit = (x2 < 0 || x2 >= m_Field->GetWidth() || y2 < 0 || y2 >= m_Field->GetHeight() || m_Field->GetCell(x2, y2) != EMPTY);
 
@@ -58,22 +61,16 @@ int TronManager::Run() {
             break;
         }
 
-        // Обновляем сетку: старая голова -> след, новая позиция -> голова
+        // обновляем сетку: старая голова -> след, новая позиция -> голова
         m_Field->SetCell(oldX1, oldY1, P1_TRAIL);
         m_Field->SetCell(oldX2, oldY2, P2_TRAIL);
         m_Field->SetCell(x1, y1, P1_HEAD);
         m_Field->SetCell(x2, y2, P2_HEAD);
 
         Render();
-        Sleep(60); // Скорость игры
+        Sleep(60); // скорость игры
     }
     return winner;
-}
-
-void TronManager::ProcessInput()
-{
-    m_Player1->UpdateDirection(m_Field);
-    m_Player2->UpdateDirection(m_Field);
 }
 
 void TronManager::Render() {

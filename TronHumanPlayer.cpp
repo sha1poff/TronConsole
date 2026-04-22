@@ -28,11 +28,15 @@ void TronHumanPlayer::UpdateDirection(const TronField* field)
 {
     int pressedKey = 0;
 
-    // Опрашиваем клавиши (универсально)
-    if (GetAsyncKeyState(m_UpKey) & 0x8000)         pressedKey = m_UpKey;
-    else if (GetAsyncKeyState(m_DownKey) & 0x8000)  pressedKey = m_DownKey;
-    else if (GetAsyncKeyState(m_LeftKey) & 0x8000)  pressedKey = m_LeftKey;
-    else if (GetAsyncKeyState(m_RightKey) & 0x8000) pressedKey = m_RightKey;
+    // опрашиваем клавиши (универсально)
+    if (GetAsyncKeyState(m_UpKey) & 0x8000)
+        pressedKey = m_UpKey;
+    else if (GetAsyncKeyState(m_DownKey) & 0x8000)
+        pressedKey = m_DownKey;
+    else if (GetAsyncKeyState(m_LeftKey) & 0x8000)
+        pressedKey = m_LeftKey;
+    else if (GetAsyncKeyState(m_RightKey) & 0x8000)
+        pressedKey = m_RightKey;
 
     if (pressedKey == 0) return;
 
@@ -41,22 +45,22 @@ void TronHumanPlayer::UpdateDirection(const TronField* field)
         // Работает и для WASD (коды букв), и для стрелок (VK коды)
         case 'W':
         case VK_UP:
-            if (m_Dir != Direction::DOWN) m_Dir = Direction::UP;
+            if (m_Dir != DOWN) m_Dir = UP;
             break;
 
         case 'S':
         case VK_DOWN:
-            if (m_Dir != Direction::UP) m_Dir = Direction::DOWN;
+            if (m_Dir != UP) m_Dir = DOWN;
             break;
 
         case 'A':
         case VK_LEFT:
-            if (m_Dir != Direction::RIGHT) m_Dir = Direction::LEFT;
+            if (m_Dir != RIGHT) m_Dir = LEFT;
             break;
 
         case 'D':
         case VK_RIGHT:
-            if (m_Dir != Direction::LEFT) m_Dir = Direction::RIGHT;
+            if (m_Dir != LEFT) m_Dir = RIGHT;
             break;
     }
 }

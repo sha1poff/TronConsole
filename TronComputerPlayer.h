@@ -13,6 +13,9 @@ private:
     // уровень сложности
 	int m_Difficulty; // 1 - легкий, 2 - средний, 3 - сложный
 
+	int EvaluateArea(const TronField* field, int startX, int startY);
+    bool IsNarrowPassage(const TronField* field, int x, int y, Direction d);
+
 public:
     TronComputerPlayer( std::string name, int playerNum);
 
